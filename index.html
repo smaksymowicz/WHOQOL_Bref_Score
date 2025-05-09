@@ -105,7 +105,7 @@
       "26. Jak często doświadczałeś/aś negatywnych uczuć (np. smutek, rozpacz)?"
     ];
 
-  const domainMap = {
+   const domainMap = {
       "Fizyczna": [3, 4, 10, 15, 16, 17, 18],
       "Psychiczna": [5, 6, 7, 11, 19, 26],
       "Społeczna": [20, 21, 22],
@@ -115,12 +115,13 @@
     const reversedItems = [3, 4, 26];
 
     const questionsContainer = document.getElementById('questions');
-    questions.forEach((q, index) => {
+    labels.forEach((q, index) => {
       const div = document.createElement('div');
       div.className = 'question';
-      div.innerHTML = `<p>${q}</p>` +
+      div.id = `qdiv${index + 1}`;
+      div.innerHTML = `<p>${index + 1}. ${q}</p>` +
         Array.from({ length: 5 }, (_, i) => `
-          <label><input type="radio" name="q${index + 1}" value="${i + 1}" required> ${i + 1}</label>
+          <label><input type="radio" name="q${index + 1}" value="${i + 1}"> ${i + 1}</label>
         `).join('');
       questionsContainer.appendChild(div);
     });
@@ -129,6 +130,23 @@
       const form = document.getElementById('quizForm');
       const data = new FormData(form);
       const scores = {}, counts = {};
+      let allAnswered = true;
+
+      for (let i = 1; i <= 26; i++) {
+        const div = document.getElementById(`qdiv${i}`);
+        const answer = data.get(`q${i}`);
+        if (!answer) {
+          div.classList.add('missing');
+          allAnswered = false;
+        } else {
+          div.classList.remove('missing');
+        }
+      }
+
+      if (!allAnswered) {
+        alert("Proszę odpowiedzieć na wszystkie pytania (brakujące pytania zostały podświetlone).");
+        return;
+      }
 
       for (const domain in domainMap) {
         scores[domain] = 0;
@@ -137,13 +155,7 @@
 
       for (let i = 1; i <= 26; i++) {
         let val = parseInt(data.get(`q${i}`));
-        if (isNaN(val)) {
-          alert("Proszę odpowiedzieć na wszystkie pytania.");
-          return;
-        }
-        if (reversedItems.includes(i)) {
-          val = 6 - val;
-        }
+        if (reversedItems.includes(i)) val = 6 - val;
         for (const domain in domainMap) {
           if (domainMap[domain].includes(i)) {
             scores[domain] += val;
