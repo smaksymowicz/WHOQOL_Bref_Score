@@ -109,9 +109,11 @@
       div.className = 'question';
       div.id = `qdiv${index + 1}`;
       div.innerHTML = `<p>${index + 1}. ${q}</p>` +
-        Array.from({ length: 5 }, (_, i) => `
-          <label><input type="radio" name="q${index + 1}" value="${i + 1}"> ${i + 1}</label>
-        `).join('');
+       Array.from({ length: 5 }, (_, i) => `
+  <label>
+    <input type="radio" name="q${index + 1}" value="${i + 1}"><br>${i + 1}
+  </label>
+`).join('');
       questionsContainer.appendChild(div);
     });
 
