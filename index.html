@@ -105,12 +105,14 @@
       "26. Jak często doświadczałeś/aś negatywnych uczuć (np. smutek, rozpacz)?"
     ];
 
-    const domainMap = {
-      physical: [3, 4, 10, 15, 16, 17, 18],
-      psychological: [5, 6, 7, 11, 19, 26],
-      social: [20, 21, 22],
-      environment: [8, 9, 12, 13, 14, 23, 24, 25]
+  const domainMap = {
+      "Fizyczna": [3, 4, 10, 15, 16, 17, 18],
+      "Psychiczna": [5, 6, 7, 11, 19, 26],
+      "Relacje społeczne": [20, 21, 22],
+      "Środowiskowa": [8, 9, 12, 13, 14, 23, 24, 25]
     };
+
+    const reversedItems = [3, 4, 26];
 
     const questionsContainer = document.getElementById('questions');
     questions.forEach((q, index) => {
@@ -126,19 +128,25 @@
     function calculateScore() {
       const form = document.getElementById('quizForm');
       const data = new FormData(form);
-      const scores = { physical: 0, psychological: 0, social: 0, environment: 0 };
-      const counts = { physical: 0, psychological: 0, social: 0, environment: 0 };
+      const scores = {}, counts = {};
+
+      for (const domain in domainMap) {
+        scores[domain] = 0;
+        counts[domain] = domainMap[domain].length;
+      }
 
       for (let i = 1; i <= 26; i++) {
-        const val = parseInt(data.get(`q${i}`));
+        let val = parseInt(data.get(`q${i}`));
         if (isNaN(val)) {
           alert("Proszę odpowiedzieć na wszystkie pytania.");
           return;
         }
+        if (reversedItems.includes(i)) {
+          val = 6 - val;
+        }
         for (const domain in domainMap) {
           if (domainMap[domain].includes(i)) {
             scores[domain] += val;
-            counts[domain]++;
           }
         }
       }
@@ -149,13 +157,13 @@
         const mean = raw / counts[domain];
         const score20 = (mean * 4).toFixed(2);
         const score100 = ((mean - 1) * 25).toFixed(2);
-        resultText += `\nDomena: ${domain.toUpperCase()}\n`;
+        resultText += `\nDomena: ${domain}\n`;
         resultText += `  - Surowy wynik: ${raw}\n`;
         resultText += `  - Skala 4-20: ${score20}\n`;
         resultText += `  - Skala 0-100: ${score100}\n`;
       }
 
-      resultText += "\nInterpretacja: Im wyższy wynik, tym lepsza jakość życia w danej domenie. Skala 0–100 pozwala łatwiej porównać wyniki między domenami."
+      resultText += "\nInterpretacja: patrz informacje poniżej."
       document.getElementById('results').innerText = resultText;
     }
   </script>
