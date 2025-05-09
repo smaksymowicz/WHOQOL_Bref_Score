@@ -25,9 +25,12 @@
   <p><b>Instrukcja:</b> w polach tabeli przy każdym z pytań należy odwzorować udzielone odpowiedzi wpisane w papierowym kwestionariuszu, zgodnie z jego graficznym układem (od lewej do prawej). Po wypełnieniu wszystkich pytań, należy kliknąć "Oblicz wynik". Pod tabelą podane zostaną wyniki: surowe, w skali 4-20 i 0-100 oraz wskazówki dot. interpretacji.</p>
 
   <form id="quizForm">
-    <div id="questions"></div>
+  <div id="questions"></div>
+  <div style="margin-top: 20px;">
     <button type="button" onclick="calculateScore()">Oblicz wynik</button>
-  </form>
+    <button type="button" onclick="clearAnswers()">Wyczyść</button>
+  </div>
+</form>
   <div class="results" id="results"></div>
 
   <h2>Interpretacja wyników</h2>
@@ -179,6 +182,21 @@
       resultText += "\nInterpretacja: patrz informacje poniżej.";
       document.getElementById('results').innerText = resultText;
     }
+
+    function clearAnswers() {
+  const inputs = document.querySelectorAll('#quizForm input[type="radio"]');
+  inputs.forEach(input => input.checked = false);
+
+  // Wyczyść podświetlenia brakujących pytań
+  for (let i = 1; i <= 26; i++) {
+    document.getElementById(`qdiv${i}`).classList.remove('missing');
+  }
+
+  // Wyczyść wyniki
+  document.getElementById('results').innerText = '';
+}
   </script>
+
+  
 </body>
 </html>
