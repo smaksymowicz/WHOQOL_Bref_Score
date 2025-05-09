@@ -24,7 +24,37 @@ kontakt: stanislaw.maksymowicz@uwm.edu.pl)</p>
     <button type="button" onclick="calculateScore()">Oblicz wynik</button>
   </form>
   <div class="results" id="results"></div>
-
+<h2>Interpretacja wyników</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Skala 0-100</th>
+        <th>Interpretacja</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>0–50</td><td>Bardzo niska jakość życia</td></tr>
+      <tr><td>51–60</td><td>Niska jakość życia</td></tr>
+      <tr><td>61–70</td><td>Średnia jakość życia</td></tr>
+      <tr><td>71–80</td><td>Dobra jakość życia</td></tr>
+      <tr><td>81–100</td><td>Bardzo dobra jakość życia</td></tr>
+    </tbody>
+  </table>
+<table>
+    <thead>
+      <tr>
+        <th>Skala 4-20</th>
+        <th>Interpretacja</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>4.0–7.9</td><td>Bardzo niska jakość życia</td></tr>
+      <tr><td>8.0-11.9</td><td>Niska jakość życia</td></tr>
+      <tr><td>12.0–15.9</td><td>Średnia jakość życia</td></tr>
+      <tr><td>16.0–18.9</td><td>Dobra jakość życia</td></tr>
+      <tr><td>19.0–20.0</td><td>Bardzo dobra jakość życia</td></tr>
+    </tbody>
+  </table>
   <script>
     const questions = [
       "1. Jak oceniasz jakość swojego życia?",
