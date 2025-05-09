@@ -76,7 +76,8 @@
     </table>
 
   <script>
-    const questions = [
+     const questions = [...Array(26).keys()].map(i => i + 1);
+   const labels = [
       "1. Jak oceniasz jakość swojego życia?",
       "2. Czy jesteś zadowolony/a ze swojego zdrowia?",
       "3. Jak bardzo ból fizyczny przeszkadzał Ci robić to, co musisz?",
